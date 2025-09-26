@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: employee-api-test
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=100,expireAfterWrite=1m
+    cache-names:
+      - employees
+
+server:
+  port: 0
+
+# Mock Employee API Configuration for testing
+mock:
+  employee:
+    api:
+      base-url: http://localhost:8112/api/v1/employee
+      timeout: 2000
+      retry:
+        max-attempts: 2
+        initial-delay: 500
+
+# Logging Configuration for tests
+logging:
+  level:
+    com.reliaquest.api: DEBUG
+    org.springframework.cache: DEBUG
+    org.springframework.retry: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
+    com.github.tomakehurst.wiremock: DEBUG

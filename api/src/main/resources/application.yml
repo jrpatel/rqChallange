@@ -1,2 +1,29 @@
-spring.application.name: employee-api
+spring:
+  application:
+    name: employee-api
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=5m
+    cache-names:
+      - employees
 server.port: 8111
+
+logging:
+  level:
+    com.reliaquest: DEBUG
+    org.springframework.cache: DEBUG
+    org.springframework.retry: INFO
+    org.springframework.web.reactive.function.client: DEBUG
+
+employee-v1:
+  api:
+    base-url: http://localhost:8112/api/v1/employee
+    endpoints:
+      default: ""
+      get-by-id: "/{id}"
+    timeout: 10000
+    retry:
+      max-attempts: 5
+      initial-delay: 500
+      max-backoff: 10000
